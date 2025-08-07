@@ -29,6 +29,8 @@
             --shadow-sm: 0 5px 15px rgba(0,0,0,0.05);
             --shadow-md: 0 10px 30px rgba(0,0,0,0.1);
             --shadow-lg: 0 20px 60px rgba(0,0,0,0.08);
+            --bg-light: #f8f9fa;
+            --border-color: #dee2e6;
             font-size: 16px; /* Base font size for mobile */
         }
 
@@ -615,23 +617,56 @@
         }
 
         footer {
-            background: #343a40;
-            color: white;
+            padding: var(--spacing-lg) 0;
             text-align: center;
-            padding: 40px 0;
-            margin-top: 50px;
-        }
-        
-        @media (min-width: 768px) {
-            footer {
-                padding: 60px 0;
-                margin-top: 80px;
-            }
+            background: var(--bg-light);
+            border-top: 1px solid var(--border-color);
+            margin-top: var(--spacing-xxl);
         }
 
-        footer p {
-            font-size: 1.1rem;
-            opacity: 0.8;
+        .footer p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .lang-switcher {
+            margin-bottom: 15px;
+        }
+        
+        .language-selector {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+        
+        .language-selector select {
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 1px solid var(--border-color, #ddd);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            padding-right: 25px;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+            background-size: 12px;
+            transition: all 0.2s ease;
+        }
+        
+        .language-selector select:hover {
+            border-color: var(--text-secondary);
+        }
+        
+        .language-selector select:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
         }
 
         /* Additional mobile optimizations */
@@ -692,92 +727,98 @@
 </head>
 <body>
     <header>
+        <div class="language-selector">
+            <select id="languageSelect" onchange="setLanguage(this.value)">
+                <option value="en">English</option>
+                <option value="hr">Hrvatski</option>
+            </select>
+        </div>
         <div class="container">
-            <h1>Lipica Unito</h1>
-            <p class="subtitle">Timeless Stone from the Karst Plateau</p>
+            <h1 data-translate="mainTitle">Lipica Unito</h1>
+            <p class="subtitle" data-translate="mainSubtitle">Timeless Stone from the Karst Plateau</p>
         </div>
     </header>
 
     <main>
         <div class="container">
             <section class="intro">
-                <p>Over 85 million years during the Cretaceous period, under clear waters from tiny shells and bones from countless sea creatures and sands pressed together to form a special rock called <strong>Lipica Unito</strong>. This smooth gray limestone from the Karst region is known for tiny fossil bits that catch the light, giving it a soft shimmer.</p>
+                <p data-translate="introText">Over 85 million years during the Cretaceous period, under clear waters from tiny shells and bones from countless sea creatures and sands pressed together to form a special rock called <strong>Lipica Unito</strong>. This smooth gray limestone from the Karst region is known for tiny fossil bits that catch the light, giving it a soft shimmer.</p>
             </section>
 
             <section class="section">
                 <div class="section-header">
-                    <h2>The Birthplace</h2>
+                    <h2 data-translate="birthplaceTitle">The Birthplace</h2>
                 </div>
                 <div class="section-content">
-                    <p>Lipica Unito—and its flowery-patterned sister, Lipica Fiorito—come from the same rocky home: the Karst plateau near the village of Lipica in southwest Slovenia. For hundreds of years, quarry workers followed its grey stripes in small, open pits.</p>
+                    <p data-translate="birthplaceDesc1">Lipica Unito—and its flowery-patterned sister, Lipica Fiorito—come from the same rocky home: the Karst plateau near the village of Lipica in southwest Slovenia. For hundreds of years, quarry workers followed its grey stripes in small, open pits.</p>
                     
                     <div class="birthplace-images">
                         <div class="tale-image-actual" onclick="openFullscreen('Surface Quarry', 'Historic open-pit quarry where Lipica Unito was first extracted, showing the natural grey stripes of limestone layers against the Karst landscape.')">
                             <img src="media/surface_quarry1.png" alt="Surface Quarry" class="tale-preview-image">
                             <div class="image-overlay">
-                                <div class="placeholder-text">Surface Quarry<br><small>Historic Open-Pit Extraction</small></div>
+                                <div class="placeholder-text" data-translate="surfaceQuarryOverlay">Surface Quarry<br><small>Historic Open-Pit Extraction</small></div>
                             </div>
                         </div>
                         <div class="tale-image-actual" onclick="openFullscreen('Lipica II Underground', 'Modern underground Lipica II quarry - a stone cathedral 50 meters below surface where diamond-wire saws cut perfect 20-tonne blocks.')">
                             <img src="media/lipica_II_1.png" alt="Lipica II Underground" class="tale-preview-image">
                             <div class="image-overlay">
-                                <div class="placeholder-text">Lipica II Underground<br><small>Modern Stone Cathedral</small></div>
+                                <div class="placeholder-text" data-translate="lipica2Overlay">Lipica II Underground<br><small>Modern Stone Cathedral</small></div>
                             </div>
                         </div>
                     </div>
                     
-                    <p>In 1986 the work moved below ground when Marmor Sežana opened the Lipica II quarry, a hidden "stone cathedral" sitting 50 m under the surface. Diamond-wire saws cut perfect 20-tonne blocks while the land above stays almost untouched.</p>
+                    <p data-translate="birthplaceDesc2">In 1986 the work moved below ground when Marmor Sežana opened the Lipica II quarry, a hidden "stone cathedral" sitting 50 m under the surface. Diamond-wire saws cut perfect 20-tonne blocks while the land above stays almost untouched.</p>
                     
-                    <p>Whether taken from the sunny pits or Lipica II's cool echoing halls, every piece of Lipica Unito shows the plateau's silver-grey colour sprinkled with tiny fossils, linking today's buildings to a stoneworking story that stretches across centuries and over 80 years of modern extraction.</p>
+                    <p data-translate="birthplaceDesc3">Whether taken from the sunny pits or Lipica II's cool echoing halls, every piece of Lipica Unito shows the plateau's silver-grey colour sprinkled with tiny fossils, linking today's buildings to a stoneworking story that stretches across centuries and over 80 years of modern extraction.</p>
                 </div>
             </section>
 
             <section class="section">
                 <div class="section-header">
-                    <h2>Three True Tales of Lipica Unito</h2>
+                    <h2 data-translate="talesTitle">Three True Tales of Lipica Unito</h2>
                 </div>
                 <div class="section-content">
                     <div class="tales">
                         <div class="tale">
-                            <h3>1. The Imperial Stud Farm (1580)</h3>
+                            <h3 data-translate="tale1Title">1. The Imperial Stud Farm (1580)</h3>
                             <div class="tale-content">
-                                <p>When Archduke Charles II chose the windy Karst plateau for his new Lipica Stud Farm, he built the stables and manor from the grey limestone lying beneath the horses' hooves. Local masons shaped Lipica Unito into cool, thick walls that stayed refreshingly chill in summer and snug in the bora gales of winter. Grooms swear that running a hand across the fossil-flecked doorframes still brings good luck before a dressage show—proof that stone and stallion share the same calm spirit.</p>
+                                <p data-translate="tale1Desc">When Archduke Charles II chose the windy Karst plateau for his new Lipica Stud Farm, he built the stables and manor from the grey limestone lying beneath the horses' hooves. Local masons shaped Lipica Unito into cool, thick walls that stayed refreshingly chill in summer and snug in the bora gales of winter. Grooms swear that running a hand across the fossil-flecked doorframes still brings good luck before a dressage show—proof that stone and stallion share the same calm spirit.</p>
                             </div>
                             <div class="tale-image-container">
                                 <div class="tale-image-actual" onclick="openFullscreen('Imperial Stud Farm', 'The historic Lipica Stud Farm built from local limestone, with thick walls that stay cool in summer and warm in winter, where Lipizzaner horses have been bred for centuries.')">
                                     <img src="media/stud_farm1.png" alt="Imperial Stud Farm Architecture" class="tale-preview-image">
                                     <div class="image-overlay">
-                                        <div class="placeholder-text">Imperial Stud Farm Architecture<br><small>Lipizzaner Horse Stables in Stone</small></div>
+                                        <div class="placeholder-text" data-translate="tale1Overlay">Imperial Stud Farm Architecture<br><small>Lipizzaner Horse Stables in Stone</small></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="tale">
-                            <h3>2. Rails to Ringstrasse (1857-1918)</h3>
+                            <h3 data-translate="tale2Title">2. Rails to Ringstrasse (1857-1918)</h3>
                             <div class="tale-content">
-                                <p>The 1857 Trieste–Vienna railway turned Karst quarries into express suppliers for the booming Habsburg capital. Wagon-loads of Lipica Unito rattled north each night, destined for the grand Ringstrasse. There, architects tucked the silver-grey blocks into façades and window tracery of the new Votive Church and surrounding townhouses. Decades later, geologist Alois Kieslinger traced the stone's fossil patterns and confirmed its origin. Modern restorers still order fresh Unito from the same quarry because the century-old carvings have out-weathered neighboring sandstones—testament to a limestone that travels well and ages even better.</p>
+                                <p data-translate="tale2Desc">The 1857 Trieste–Vienna railway turned Karst quarries into express suppliers for the booming Habsburg capital. Wagon-loads of Lipica Unito rattled north each night, destined for the grand Ringstrasse. There, architects tucked the silver-grey blocks into façades and window tracery of the new Votive Church and surrounding townhouses. Decades later, geologist Alois Kieslinger traced the stone's fossil patterns and confirmed its origin. Modern restorers still order fresh Unito from the same quarry because the century-old carvings have out-weathered neighboring sandstones—testament to a limestone that travels well and ages even better.</p>
                             </div>
                             <div class="tale-image-container">
                                 <div class="tale-image-actual" onclick="openFullscreen('Vienna Ringstrasse', 'Grand Habsburg architecture along Vienna\'s Ringstrasse featuring Lipica Unito limestone in façades and window tracery of the Votive Church and surrounding townhouses.')">
                                     <img src="media/votive_church1.png" alt="Votiv Church Architecture" class="tale-preview-image">
                                     <div class="image-overlay">
-                                        <div class="placeholder-text">Votiv Church Architecture<br><small>Habsburg Capital Stone Legacy</small></div>
+                                        <div class="placeholder-text" data-translate="tale2Overlay">Votiv Church Architecture<br><small>Habsburg Capital Stone Legacy</small></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="tale">
-                            <h3>3. A Skyscraper Takes Flight (1933)</h3>
+                            <h3 data-translate="tale3Title">3. A Skyscraper Takes Flight (1933)</h3>
                             <div class="tale-content">
-                                <p>Ljubljana's Nebotičnik rose 70 m, daringly modern for its time. Yet its architects grounded the tower in tradition, lining every lift lobby and the shimmer of the entrance floor with polished Lipica Unito. Residents joked the elevators shot "from Karst to the clouds," because the same stone that paved their village squares now whisked them skyward. Ninety years on, the grey panels still gleam—proving the rock can swap shepherd paths for Art-Deco glamour without losing a grain of its soul.</p>
+                                <p data-translate="tale3Desc">Ljubljana's Nebotičnik rose 70 m, daringly modern for its time. Yet its architects grounded the tower in tradition, lining every lift lobby and the shimmer of the entrance floor with polished Lipica Unito. Residents joked the elevators shot "from Karst to the clouds," because the same stone that paved their village squares now whisked them skyward. Ninety years on, the grey panels still gleam—proving the rock can swap shepherd paths for Art-Deco glamour without losing a grain of its soul.</p>
                             </div>
                             <div class="tale-image-container">
                                 <div class="tale-image-actual" onclick="openFullscreen('Ljubljana Nebotičnik', 'Ljubljana\'s iconic Nebotičnik skyscraper with polished Lipica Unito lining the lift lobbies and entrance floor, blending Art Deco modernism with traditional Karst stone.', 'https://via.placeholder.com/800x600?text=Ljubljana+Nebotičnik')">
                                     <img src="media/neboticnik1.png" alt="Ljubljana Nebotičnik Architecture" class="tale-preview-image">
                                     <div class="image-overlay">
-                                        <div class="placeholder-text">Ljubljana Nebotičnik Tower<br><small>Art Deco Meets Karst Stone</small></div>
+                                        <div class="placeholder-text" data-translate="tale3Overlay">Ljubljana Nebotičnik Tower<br><small>Art Deco Meets Karst Stone</small></div>
                                     </div>
                                 </div>
                             </div>
@@ -788,33 +829,33 @@
 
             <section class="section">
                 <div class="section-header">
-                    <h2>A Stone's Ongoing Tale</h2>
+                    <h2 data-translate="ongoingTitle">A Stone's Ongoing Tale</h2>
                 </div>
                 <div class="section-content">
                     <div class="projects">
                         <div class="project">
-                            <h3>Cankarjev dom Forecourt, Ljubljana (2005)</h3>
+                            <h3 data-translate="project1Title">Cankarjev dom Forecourt, Ljubljana (2005)</h3>
+                            <p data-translate="project1Desc">Two thousand square metres of bush-hammered Lipica Unito pave the plaza outside Slovenia's main cultural hall, giving theatergoers a textured, non-slip carpet of silver-grey stone that glows under stage-door lights.</p>
                             <div class="tale-image-container">
                                 <div class="tale-image-actual" onclick="openFullscreen('Cankarjev Dom', 'Two thousand square metres of bush-hammered Lipica Unito paving the plaza outside Slovenia\'s main cultural hall, creating a textured carpet that glows under stage lights.')">
                                     <img src="media/cankarjev_dom1.png" alt="Cankarjev Dom Architecture" class="tale-preview-image">
                                     <div class="image-overlay">
-                                        <div class="placeholder-text">Cultural Plaza Paving<br><small>Bush-Hammered Texture</small></div>
+                                        <div class="placeholder-text" data-translate="project1Overlay">Cultural Plaza Paving<br><small>Bush-Hammered Texture</small></div>
                                     </div>
                                 </div>
                             </div>
-                            <p>Two thousand square metres of bush-hammered Lipica Unito pave the plaza outside Slovenia's main cultural hall, giving theatergoers a textured, non-slip carpet of silver-grey stone that glows under stage-door lights.</p>
                         </div>
                         <div class="project">
-                            <h3>Umag Seafront Promenade, Croatia (2021)</h3>
+                            <h3 data-translate="project2Title">Umag Seafront Promenade, Croatia (2021)</h3>
+                            <p data-translate="project2Desc">A 5,600 m² ribbon of honed Lipica Unito tiles now lines the Adriatic waterfront. The smooth-but-grippy finish stands up to salty spray, bicycle tires, and evening strolls, all while mirroring the grey of distant Karst cliffs.</p>
                             <div class="tale-image-container">  
                                 <div class="tale-image-actual" onclick="openFullscreen('Umag Promenade', 'A 5,600 m² ribbon of honed Lipica Unito tiles lining the Adriatic waterfront, with smooth-but-grippy finish standing up to salty spray and evening strolls.')">
                                     <img src="media/umag_promenade1.png" alt="Umag Promenade Architecture" class="tale-preview-image">
                                     <div class="image-overlay">
-                                        <div class="placeholder-text">Adriatic Waterfront<br><small>Honed Limestone Promenade</small></div>
+                                        <div class="placeholder-text" data-translate="project2Overlay">Adriatic Waterfront<br><small>Honed Limestone Promenade</small></div>
                                     </div>
                                 </div>
                             </div>
-                            <p>A 5,600 m² ribbon of honed Lipica Unito tiles now lines the Adriatic waterfront. The smooth-but-grippy finish stands up to salty spray, bicycle tires, and evening strolls, all while mirroring the grey of distant Karst cliffs.</p>
                         </div>
                     </div>
                 </div>
@@ -824,7 +865,7 @@
 
     <footer>
         <div class="container">
-            <p>Lipica Unito - Where ancient seas meet modern architecture</p>
+            <p data-translate="footerText">Lipica Unito - Where ancient seas meet modern architecture</p>
         </div>
     </footer>
 
@@ -942,6 +983,96 @@
             document.getElementById('fullscreenOverlay').style.display = 'none';
             document.body.style.overflow = 'auto';
         }
+
+        const translations = {
+            en: {
+                mainTitle: 'Lipica Unito',
+                mainSubtitle: 'Timeless Stone from the Karst Plateau',
+                introText: 'Over 85 million years during the Cretaceous period, under clear waters from tiny shells and bones from countless sea creatures and sands pressed together to form a special rock called <strong>Lipica Unito</strong>. This smooth gray limestone from the Karst region is known for tiny fossil bits that catch the light, giving it a soft shimmer.',
+                birthplaceTitle: 'The Birthplace',
+                birthplaceDesc1: 'Lipica Unito—and its flowery-patterned sister, Lipica Fiorito—come from the same rocky home: the Karst plateau near the village of Lipica in southwest Slovenia. For hundreds of years, quarry workers followed its grey stripes in small, open pits.',
+                surfaceQuarryOverlay: 'Surface Quarry<br><small>Historic Open-Pit Extraction</small>',
+                lipica2Overlay: 'Lipica II Underground<br><small>Modern Stone Cathedral</small>',
+                birthplaceDesc2: 'In 1986 the work moved below ground when Marmor Sežana opened the Lipica II quarry, a hidden "stone cathedral" sitting 50 m under the surface. Diamond-wire saws cut perfect 20-tonne blocks while the land above stays almost untouched.',
+                birthplaceDesc3: 'Whether taken from the sunny pits or Lipica II\'s cool echoing halls, every piece of Lipica Unito shows the plateau\'s silver-grey colour sprinkled with tiny fossils, linking today\'s buildings to a stoneworking story that stretches across centuries and over 80 years of modern extraction.',
+                talesTitle: 'Three True Tales of Lipica Unito',
+                tale1Title: '1. The Imperial Stud Farm (1580)',
+                tale1Desc: 'When Archduke Charles II chose the windy Karst plateau for his new Lipica Stud Farm, he built the stables and manor from the grey limestone lying beneath the horses\' hooves. Local masons shaped Lipica Unito into cool, thick walls that stayed refreshingly chill in summer and snug in the bora gales of winter. Grooms swear that running a hand across the fossil-flecked doorframes still brings good luck before a dressage show—proof that stone and stallion share the same calm spirit.',
+                tale1Overlay: 'Imperial Stud Farm Architecture<br><small>Lipizzaner Horse Stables in Stone</small>',
+                tale2Title: '2. Rails to Ringstrasse (1857-1918)',
+                tale2Desc: 'The 1857 Trieste–Vienna railway turned Karst quarries into express suppliers for the booming Habsburg capital. Wagon-loads of Lipica Unito rattled north each night, destined for the grand Ringstrasse. There, architects tucked the silver-grey blocks into façades and window tracery of the new Votive Church and surrounding townhouses. Decades later, geologist Alois Kieslinger traced the stone\'s fossil patterns and confirmed its origin. Modern restorers still order fresh Unito from the same quarry because the century-old carvings have out-weathered neighboring sandstones—testament to a limestone that travels well and ages even better.',
+                tale2Overlay: 'Votiv Church Architecture<br><small>Habsburg Capital Stone Legacy</small>',
+                tale3Title: '3. A Skyscraper Takes Flight (1933)',
+                tale3Desc: 'Ljubljana\'s Nebotičnik rose 70 m, daringly modern for its time. Yet its architects grounded the tower in tradition, lining every lift lobby and the shimmer of the entrance floor with polished Lipica Unito. Residents joked the elevators shot "from Karst to the clouds," because the same stone that paved their village squares now whisked them skyward. Ninety years on, the grey panels still gleam—proving the rock can swap shepherd paths for Art-Deco glamour without losing a grain of its soul.',
+                tale3Overlay: 'Ljubljana Nebotičnik Tower<br><small>Art Deco Meets Karst Stone</small>',
+                ongoingTitle: 'A Stone\'s Ongoing Tale',
+                project1Title: 'Cankarjev dom Forecourt, Ljubljana (2005)',
+                project1Desc: 'Two thousand square metres of bush-hammered Lipica Unito pave the plaza outside Slovenia\'s main cultural hall, giving theatergoers a textured, non-slip carpet of silver-grey stone that glows under stage-door lights.',
+                project1Overlay: 'Cultural Plaza Paving<br><small>Bush-Hammered Texture</small>',
+                project2Title: 'Umag Seafront Promenade, Croatia (2021)',
+                project2Desc: 'A 5,600 m² ribbon of honed Lipica Unito tiles now lines the Adriatic waterfront. The smooth-but-grippy finish stands up to salty spray, bicycle tires, and evening strolls, all while mirroring the grey of distant Karst cliffs.',
+                project2Overlay: 'Adriatic Waterfront<br><small>Honed Limestone Promenade</small>',
+                footerText: 'Lipica Unito - Where ancient seas meet modern architecture'
+            },
+            hr: {
+                mainTitle: 'Lipica Unito',
+                mainSubtitle: 'Bezvremenski kamen s krške visoravni',
+                introText: 'Prije više od 85 milijuna godina, u doba krede, pod bistrim morem, sitne ljušture i kosti bezbrojnih morskih stvorenja i pijeska stisnuli su se zajedno i stvorili posebnu stijenu zvanu <strong>Lipica Unito</strong>. Ovaj glatki sivi vapnenac iz krške regije poznat je po sitnim djelićima fosila koji hvataju svjetlost, dajući mu blagi sjaj.',
+                birthplaceTitle: 'Rodno mjesto',
+                birthplaceDesc1: 'Lipica Unito—i njegova sestra s cvjetnim uzorkom, Lipica Fiorito—potječu iz istog stjenovitog doma: krške visoravni u blizini sela Lipica na jugozapadu Slovenije. Stotinama godina, kamenolomci su pratili njegove sive pruge u malim, otvorenim kopovima.',
+                surfaceQuarryOverlay: 'Površinski kop<br><small>Povijesna eksploatacija</small>',
+                lipica2Overlay: 'Podzemni kop Lipica II<br><small>Moderna kamena katedrala</small>',
+                birthplaceDesc2: 'Godine 1986. radovi su se preselili pod zemlju kada je Marmor Sežana otvorio kamenolom Lipica II, skrivenu "kamenu katedralu" koja se nalazi 50 m ispod površine. Dijamantne žičane pile režu savršene blokove od 20 tona, dok zemlja iznad ostaje gotovo netaknuta.',
+                birthplaceDesc3: 'Bilo da je uzet iz sunčanih kopova ili hladnih, odjekujućih dvorana Lipice II, svaki komad Lipice Unito pokazuje srebrno-sivu boju visoravni posutu sitnim fosilima, povezujući današnje građevine s pričom o obradi kamena koja se proteže stoljećima i preko 80 godina moderne eksploatacije.',
+                talesTitle: 'Tri istinite priče o Lipica Unito',
+                tale1Title: '1. Carska ergela (1580)',
+                tale1Desc: 'Kada je nadvojvoda Karlo II. izabrao vjetrovitu kršku visoravan za svoju novu ergelu Lipica, sagradio je staje i vlastelinstvo od sivog vapnenca koji je ležao pod konjskim kopitima. Domaći majstori oblikovali su Lipica Unito u hladne, debele zidove koji su ljeti ostajali osvježavajuće hladni, a zimi ugodni za vrijeme bure. Timaritelji se kunu da prelazak rukom preko okvira vrata s fosilima i danas donosi sreću prije dresurne predstave—dokaz da kamen i pastuh dijele isti mirni duh.',
+                tale1Overlay: 'Arhitektura carske ergele<br><small>Kamene staje za lipicance</small>',
+                tale2Title: '2. Pruga do Ringstrasse (1857-1918)',
+                tale2Desc: 'Željeznička pruga Trst–Beč iz 1857. pretvorila je krške kamenolome u ekspresne dobavljače za rastuću habsburšku prijestolnicu. Vagoni Lipice Unito svake su noći tutnjali prema sjeveru, namijenjeni za velebnu Ringstrasse. Tamo su arhitekti ugrađivali srebrno-sive blokove u pročelja i prozorske okvire nove Zavjetne crkve i okolnih gradskih kuća. Desetljećima kasnije, geolog Alois Kieslinger pratio je fosilne uzorke kamena i potvrdio njegovo podrijetlo. Moderni restauratori i danas naručuju svježi Unito iz istog kamenoloma jer su stoljetne rezbarije nadživjele susjedne pješčenjake—svjedočanstvo o vapnencu koji dobro putuje i još bolje stari.',
+                tale2Overlay: 'Arhitektura Zavjetne crkve<br><small>Kameno nasljeđe habsburške prijestolnice</small>',
+                tale3Title: '3. Neboder uzlijeće (1933)',
+                tale3Desc: 'Ljubljanski Nebotičnik uzdigao se 70 m, odvažno moderno za svoje vrijeme. Ipak, njegovi su arhitekti utemeljili toranj u tradiciji, obloživši svako predvorje dizala i sjaj ulaznog kata poliranim Lipica Unitom. Stanovnici su se šalili da dizala idu "od Krasa do oblaka", jer ih je isti kamen koji je popločavao trgove njihovih sela sada nosio u nebo. Devedeset godina kasnije, sive ploče i dalje sjaje—dokazujući da stijena može zamijeniti pastirske staze za Art-Deco glamur bez da izgubi i trun svoje duše.',
+                tale3Overlay: 'Ljubljanski Nebotičnik<br><small>Art Deco susreće krški kamen</small>',
+                ongoingTitle: 'Priča o kamenu se nastavlja',
+                project1Title: 'Trg pred Cankarjevim domom, Ljubljana (2005)',
+                project1Desc: 'Dvije tisuće četvornih metara štokovanog Lipica Unita popločava trg ispred glavne slovenske kulturne dvorane, pružajući posjetiteljima kazališta teksturirani, neklizajući tepih od srebrno-sivog kamena koji sjaji pod svjetlima pozornice.',
+                project1Overlay: 'Popločenje kulturnog trga<br><small>Štokovana tekstura</small>',
+                project2Title: 'Šetnica uz more, Umag (2021)',
+                project2Desc: 'Vrpca od 5.600 m² brušenih ploča Lipica Unito sada obrubljuje jadransku obalu. Glatka, ali prianjajuća završna obrada otporna je na slani sprej, gume bicikala i večernje šetnje, dok istovremeno odražava sivilo dalekih krških litica.',
+                project2Overlay: 'Jadranska šetnica<br><small>Brušeni vapnenac</small>',
+                footerText: 'Lipica Unito - Gdje se drevna mora susreću s modernom arhitekturom'
+            }
+        };
+
+        function setLanguage(lang) {
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
+                }
+            });
+
+            // Update dropdown selection
+            const languageSelect = document.getElementById('languageSelect');
+            if (languageSelect) {
+                languageSelect.value = lang;
+            }
+            
+            // Update footer links if they exist
+            document.querySelectorAll('.lang-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-lang') === lang) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const lang = params.get('lang') || (navigator.language.startsWith('hr') ? 'hr' : 'en');
+            setLanguage(lang);
+        });
 
         // Close on Escape key
         document.addEventListener('keydown', function(event) {

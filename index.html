@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoliKamen - Stone Heritage Projects</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Libre Baskerville', serif;
+            line-height: 1.6;
+            color: #2c2c2c;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 800px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .hero {
+            background: white;
+            padding: 60px 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 300;
+            color: #343a40;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: #6c757d;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        .description {
+            font-size: 1.1rem;
+            color: #495057;
+            margin-bottom: 40px;
+            line-height: 1.8;
+        }
+
+        .project-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+            color: white;
+            text-decoration: none;
+            padding: 20px 40px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .project-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            background: linear-gradient(135deg, #495057 0%, #343a40 100%);
+        }
+
+        .footer {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-top: 30px;
+        }
+
+        .lang-switcher {
+            margin-bottom: 15px;
+        }
+
+        .lang-link {
+            color: #6c757d;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .lang-link:hover, .lang-link.active {
+            color: #343a40;
+        }
+
+        .lang-separator {
+            margin: 0 10px;
+            color: #adb5bd;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .hero {
+                padding: 40px 20px;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .description {
+                font-size: 1rem;
+            }
+
+            .project-link {
+                padding: 15px 30px;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>GoliKamen</h1>
+            <p class="subtitle" data-translate="subtitle">Stone Heritage & Architecture Projects</p>
+            <p class="description" data-translate="description">
+                Explore the timeless beauty and architectural heritage of Karst limestone through our curated collection of stone projects. From ancient quarries to modern masterpieces, discover how limestone continues to shape our built environment.
+            </p>
+            <a href="Lipica Unito/index.html" class="project-link" data-translate="exploreLink">
+                Explore Lipica Unito
+            </a>
+        </div>
+        <div class="footer">
+            <div class="lang-switcher">
+                <a href="#" onclick="setLanguage('en')" class="lang-link active" data-lang="en">EN</a>
+                <span class="lang-separator">|</span>
+                <a href="#" onclick="setLanguage('hr')" class="lang-link" data-lang="hr">HR</a>
+            </div>
+            <p data-translate="footerText">Where ancient seas meet modern architecture</p>
+        </div>
+    </div>
+
+    <script>
+        const translations = {
+            en: {
+                subtitle: 'Stone Heritage & Architecture Projects',
+                description: 'Explore the timeless beauty and architectural heritage of Karst limestone through our curated collection of stone projects. From ancient quarries to modern masterpieces, discover how limestone continues to shape our built environment.',
+                exploreLink: 'Explore Lipica Unito',
+                footerText: 'Where ancient seas meet modern architecture'
+            },
+            hr: {
+                subtitle: 'Projekti u kamenu i arhitektonska baština',
+                description: 'Istražite bezvremensku ljepotu i arhitektonsku baštinu kraškog vapnenca kroz našu odabranu zbirku projekata u kamenu. Od drevnih kamenoloma do modernih remek-djela, otkrijte kako vapnenac i dalje oblikuje naš izgrađeni okoliš.',
+                exploreLink: 'Istražite Lipica Unito',
+                footerText: 'Gdje se drevna mora susreću s modernom arhitekturom'
+            }
+        };
+
+        function setLanguage(lang) {
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.getAttribute('data-translate');
+                el.innerHTML = translations[lang][key];
+            });
+
+            document.querySelectorAll('.lang-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-lang') === lang) {
+                    link.classList.add('active');
+                }
+            });
+
+            const projectLink = document.querySelector('.project-link');
+            projectLink.href = `Lipica Unito/index.html?lang=${lang}`;
+
+            // Prevent default link behavior
+            event.preventDefault();
+        }
+
+        // Set initial language based on browser or default to 'en'
+        const initialLang = navigator.language.startsWith('hr') ? 'hr' : 'en';
+        setLanguage(initialLang);
+    </script>
+</body>
+</html>
