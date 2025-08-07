@@ -23,6 +23,8 @@
             --spacing-md: 20px;
             --spacing-lg: 30px;
             --spacing-xl: 40px;
+            --spacing-xxl: 50px;
+            --spacing-xxxl: 60px;
             --border-radius: 15px;
             --shadow-sm: 0 5px 15px rgba(0,0,0,0.05);
             --shadow-md: 0 10px 30px rgba(0,0,0,0.1);
@@ -37,7 +39,7 @@
         }
 
         body {
-            font-family: 'Georgia', 'Times New Roman', serif;
+            font-family: 'Libre Baskerville', serif;
             line-height: 1.6;
             color: var(--text-primary);
             background: var(--primary-bg);
@@ -281,7 +283,7 @@
         }
 
         .placeholder-text {
-            color: #6c757d;
+            color: white;
             font-size: 1.1rem;
             font-style: italic;
             text-align: center;
@@ -305,11 +307,34 @@
         
         @media (min-width: 768px) {
             .tales {
-                gap: 60px;
+                gap: var(--spacing-xxxl);
             }
             
             .tale {
                 padding: 40px;
+            }
+        }
+        
+        .tale h3 {
+            margin-bottom: var(--spacing-md);
+            text-align: left;
+        }
+        
+        @media (min-width: 1024px) {
+            .tale {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: var(--spacing-xs) var(--spacing-xl);
+                align-items: center;
+            }
+            
+            .tale-content {
+                grid-column: 1;
+                text-align: left;
+            }
+            
+            .tale-image-container {
+                grid-column: 2;
             }
         }
 
@@ -318,11 +343,13 @@
             color: #343a40;
             margin-bottom: var(--spacing-md);
             font-weight: 400;
+            grid-column: span 2;
         }
 
         .tale p {
             font-size: 1rem;
             line-height: 1.6;
+            margin-bottom: 0px;
         }
         
         @media (min-width: 768px) {
@@ -337,9 +364,65 @@
             }
         }
 
+        .tale-image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
         .tale-image {
             margin: 30px 0;
             aspect-ratio: 16/9;
+            width: 100%;
+        }
+        
+        @media (min-width: 1024px) {
+            .tale-image {
+                margin: 0;
+            }
+        }
+        
+        .tale-image-actual {
+            position: relative;
+            aspect-ratio: 16/9;
+            width: 100%;
+            margin: 30px 0;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .tale-image-actual:hover {
+            transform: scale(1.02);
+        }
+        
+        .tale-preview-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .image-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0));
+            color: white;
+            padding: 20px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .tale-image-actual:hover .image-overlay {
+            transform: translateY(0);
+        }
+        
+        @media (min-width: 1024px) {
+            .tale-image-actual {
+                margin: 0;
+            }
         }
 
         .projects {
@@ -416,22 +499,86 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 95vw;
-            max-height: 95vh;
-            background: #f8f9fa;
+            background: white;
+            padding: 20px;
             border-radius: var(--border-radius);
-            padding: var(--spacing-md);
-            text-align: center;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+            width: 95vw;
+            max-width: 1200px;
+            max-height: 95vh;
             overflow-y: auto;
+            position: relative;
+            box-shadow: var(--shadow-lg);
+            text-align: center;
         }
         
-        @media (min-width: 768px) {
-            .fullscreen-content {
-                width: 90vw;
-                max-height: 90vh;
-                padding: 40px;
-            }
+        .fullscreen-image-container {
+            margin: 30px 0;
+            text-align: center;
+            max-height: 60vh;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .fullscreen-image {
+            max-width: 100%;
+            max-height: 60vh;
+            object-fit: contain;
+            border-radius: var(--border-radius);
+        }
+        
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            font-size: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .gallery-nav:hover {
+            background: rgba(0, 0, 0, 0.9);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .gallery-prev {
+            left: 20px;
+        }
+        
+        .gallery-next {
+            right: 20px;
+        }
+        
+        .gallery-counter {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .fullscreen-description {
+            margin-top: 20px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            text-align: center;
         }
 
         .close-btn {
@@ -565,11 +712,17 @@
                     <p>Lipica Unito—and its flowery-patterned sister, Lipica Fiorito—come from the same rocky home: the Karst plateau near the village of Lipica in southwest Slovenia. For hundreds of years, quarry workers followed its grey stripes in small, open pits.</p>
                     
                     <div class="birthplace-images">
-                        <div class="image-placeholder" onclick="openFullscreen('Surface Quarry', 'Historic open-pit quarry where Lipica Unito was first extracted, showing the natural grey stripes of limestone layers against the Karst landscape.')">
-                            <div class="placeholder-text">Surface Quarry<br><small>Historic Open-Pit Extraction</small></div>
+                        <div class="tale-image-actual" onclick="openFullscreen('Surface Quarry', 'Historic open-pit quarry where Lipica Unito was first extracted, showing the natural grey stripes of limestone layers against the Karst landscape.')">
+                            <img src="media/surface_quarry1.png" alt="Surface Quarry" class="tale-preview-image">
+                            <div class="image-overlay">
+                                <div class="placeholder-text">Surface Quarry<br><small>Historic Open-Pit Extraction</small></div>
+                            </div>
                         </div>
-                        <div class="image-placeholder" onclick="openFullscreen('Lipica II Underground', 'Modern underground Lipica II quarry - a stone cathedral 50 meters below surface where diamond-wire saws cut perfect 20-tonne blocks.')">
-                            <div class="placeholder-text">Lipica II Underground<br><small>Modern Stone Cathedral</small></div>
+                        <div class="tale-image-actual" onclick="openFullscreen('Lipica II Underground', 'Modern underground Lipica II quarry - a stone cathedral 50 meters below surface where diamond-wire saws cut perfect 20-tonne blocks.')">
+                            <img src="media/lipica_II_1.png" alt="Lipica II Underground" class="tale-preview-image">
+                            <div class="image-overlay">
+                                <div class="placeholder-text">Lipica II Underground<br><small>Modern Stone Cathedral</small></div>
+                            </div>
                         </div>
                     </div>
                     
@@ -587,26 +740,47 @@
                     <div class="tales">
                         <div class="tale">
                             <h3>1. The Imperial Stud Farm (1580)</h3>
-                            <div class="image-placeholder tale-image" onclick="openFullscreen('Imperial Stud Farm', 'The historic Lipica Stud Farm built from local limestone, with thick walls that stay cool in summer and warm in winter, where Lipizzaner horses have been bred for centuries.')">
-                                <div class="placeholder-text">Imperial Stud Farm Architecture<br><small>Lipizzaner Horse Stables in Stone</small></div>
+                            <div class="tale-content">
+                                <p>When Archduke Charles II chose the windy Karst plateau for his new Lipica Stud Farm, he built the stables and manor from the grey limestone lying beneath the horses' hooves. Local masons shaped Lipica Unito into cool, thick walls that stayed refreshingly chill in summer and snug in the bora gales of winter. Grooms swear that running a hand across the fossil-flecked doorframes still brings good luck before a dressage show—proof that stone and stallion share the same calm spirit.</p>
                             </div>
-                            <p>When Archduke Charles II chose the windy Karst plateau for his new Lipica Stud Farm, he built the stables and manor from the grey limestone lying beneath the horses' hooves. Local masons shaped Lipica Unito into cool, thick walls that stayed refreshingly chill in summer and snug in the bora gales of winter. Grooms swear that running a hand across the fossil-flecked doorframes still brings good luck before a dressage show—proof that stone and stallion share the same calm spirit.</p>
+                            <div class="tale-image-container">
+                                <div class="tale-image-actual" onclick="openFullscreen('Imperial Stud Farm', 'The historic Lipica Stud Farm built from local limestone, with thick walls that stay cool in summer and warm in winter, where Lipizzaner horses have been bred for centuries.')">
+                                    <img src="media/stud_farm1.png" alt="Imperial Stud Farm Architecture" class="tale-preview-image">
+                                    <div class="image-overlay">
+                                        <div class="placeholder-text">Imperial Stud Farm Architecture<br><small>Lipizzaner Horse Stables in Stone</small></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="tale">
                             <h3>2. Rails to Ringstrasse (1857-1918)</h3>
-                            <div class="image-placeholder tale-image" onclick="openFullscreen('Vienna Ringstrasse', 'Grand Habsburg architecture along Vienna\'s Ringstrasse featuring Lipica Unito limestone in façades and window tracery of the Votive Church and surrounding townhouses.')">
-                                <div class="placeholder-text">Vienna Ringstrasse Architecture<br><small>Habsburg Capital Stone Legacy</small></div>
+                            <div class="tale-content">
+                                <p>The 1857 Trieste–Vienna railway turned Karst quarries into express suppliers for the booming Habsburg capital. Wagon-loads of Lipica Unito rattled north each night, destined for the grand Ringstrasse. There, architects tucked the silver-grey blocks into façades and window tracery of the new Votive Church and surrounding townhouses. Decades later, geologist Alois Kieslinger traced the stone's fossil patterns and confirmed its origin. Modern restorers still order fresh Unito from the same quarry because the century-old carvings have out-weathered neighboring sandstones—testament to a limestone that travels well and ages even better.</p>
                             </div>
-                            <p>The 1857 Trieste–Vienna railway turned Karst quarries into express suppliers for the booming Habsburg capital. Wagon-loads of Lipica Unito rattled north each night, destined for the grand Ringstrasse. There, architects tucked the silver-grey blocks into façades and window tracery of the new Votive Church and surrounding townhouses. Decades later, geologist Alois Kieslinger traced the stone's fossil patterns and confirmed its origin. Modern restorers still order fresh Unito from the same quarry because the century-old carvings have out-weathered neighboring sandstones—testament to a limestone that travels well and ages even better.</p>
+                            <div class="tale-image-container">
+                                <div class="tale-image-actual" onclick="openFullscreen('Vienna Ringstrasse', 'Grand Habsburg architecture along Vienna\'s Ringstrasse featuring Lipica Unito limestone in façades and window tracery of the Votive Church and surrounding townhouses.')">
+                                    <img src="media/votive_church1.png" alt="Votiv Church Architecture" class="tale-preview-image">
+                                    <div class="image-overlay">
+                                        <div class="placeholder-text">Votiv Church Architecture<br><small>Habsburg Capital Stone Legacy</small></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="tale">
                             <h3>3. A Skyscraper Takes Flight (1933)</h3>
-                            <div class="image-placeholder tale-image" onclick="openFullscreen('Ljubljana Nebotičnik', 'Ljubljana\'s iconic Nebotičnik skyscraper with polished Lipica Unito lining the lift lobbies and entrance floor, blending Art Deco modernism with traditional Karst stone.')">
-                                <div class="placeholder-text">Ljubljana Nebotičnik Tower<br><small>Art Deco Meets Karst Stone</small></div>
+                            <div class="tale-content">
+                                <p>Ljubljana's Nebotičnik rose 70 m, daringly modern for its time. Yet its architects grounded the tower in tradition, lining every lift lobby and the shimmer of the entrance floor with polished Lipica Unito. Residents joked the elevators shot "from Karst to the clouds," because the same stone that paved their village squares now whisked them skyward. Ninety years on, the grey panels still gleam—proving the rock can swap shepherd paths for Art-Deco glamour without losing a grain of its soul.</p>
                             </div>
-                            <p>Ljubljana's Nebotičnik rose 70 m, daringly modern for its time. Yet its architects grounded the tower in tradition, lining every lift lobby and the shimmer of the entrance floor with polished Lipica Unito. Residents joked the elevators shot "from Karst to the clouds," because the same stone that paved their village squares now whisked them skyward. Ninety years on, the grey panels still gleam—proving the rock can swap shepherd paths for Art-Deco glamour without losing a grain of its soul.</p>
+                            <div class="tale-image-container">
+                                <div class="tale-image-actual" onclick="openFullscreen('Ljubljana Nebotičnik', 'Ljubljana\'s iconic Nebotičnik skyscraper with polished Lipica Unito lining the lift lobbies and entrance floor, blending Art Deco modernism with traditional Karst stone.', 'https://via.placeholder.com/800x600?text=Ljubljana+Nebotičnik')">
+                                    <img src="media/neboticnik1.png" alt="Ljubljana Nebotičnik Architecture" class="tale-preview-image">
+                                    <div class="image-overlay">
+                                        <div class="placeholder-text">Ljubljana Nebotičnik Tower<br><small>Art Deco Meets Karst Stone</small></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -620,42 +794,27 @@
                     <div class="projects">
                         <div class="project">
                             <h3>Cankarjev dom Forecourt, Ljubljana (2005)</h3>
-                            <div class="image-placeholder project-image" onclick="openFullscreen('Cankarjev Dom', 'Two thousand square metres of bush-hammered Lipica Unito paving the plaza outside Slovenia\'s main cultural hall, creating a textured carpet that glows under stage lights.')">
-                                <div class="placeholder-text">Cultural Plaza Paving<br><small>Bush-Hammered Texture</small></div>
+                            <div class="tale-image-container">
+                                <div class="tale-image-actual" onclick="openFullscreen('Cankarjev Dom', 'Two thousand square metres of bush-hammered Lipica Unito paving the plaza outside Slovenia\'s main cultural hall, creating a textured carpet that glows under stage lights.')">
+                                    <img src="media/cankarjev_dom1.png" alt="Cankarjev Dom Architecture" class="tale-preview-image">
+                                    <div class="image-overlay">
+                                        <div class="placeholder-text">Cultural Plaza Paving<br><small>Bush-Hammered Texture</small></div>
+                                    </div>
+                                </div>
                             </div>
                             <p>Two thousand square metres of bush-hammered Lipica Unito pave the plaza outside Slovenia's main cultural hall, giving theatergoers a textured, non-slip carpet of silver-grey stone that glows under stage-door lights.</p>
                         </div>
-
-                        <div class="project">
-                            <h3>Slovenian Pavilion, Milan World Expo (2015)</h3>
-                            <div class="image-placeholder project-image" onclick="openFullscreen('Milan Expo Pavilion', 'Slovenia\'s Milan Expo pavilion wrapped in slim Lipica Unito exterior fins with matching interior floors, showcasing the nation\'s stone heritage on the world stage.')">
-                                <div class="placeholder-text">World Expo Showcase<br><small>National Stone Identity</small></div>
-                            </div>
-                            <p>Architects wrapped the pavilion in slim exterior fins and laid interior floors of the same limestone, turning the building into a traveling calling-card for the nation's "stone DNA." Visitors stepped from Italy into a slice of Karst plateau without crossing a border.</p>
-                        </div>
-
                         <div class="project">
                             <h3>Umag Seafront Promenade, Croatia (2021)</h3>
-                            <div class="image-placeholder project-image" onclick="openFullscreen('Umag Promenade', 'A 5,600 m² ribbon of honed Lipica Unito tiles lining the Adriatic waterfront, with smooth-but-grippy finish standing up to salty spray and evening strolls.')">
-                                <div class="placeholder-text">Adriatic Waterfront<br><small>Honed Limestone Promenade</small></div>
+                            <div class="tale-image-container">  
+                                <div class="tale-image-actual" onclick="openFullscreen('Umag Promenade', 'A 5,600 m² ribbon of honed Lipica Unito tiles lining the Adriatic waterfront, with smooth-but-grippy finish standing up to salty spray and evening strolls.')">
+                                    <img src="media/umag_promenade1.png" alt="Umag Promenade Architecture" class="tale-preview-image">
+                                    <div class="image-overlay">
+                                        <div class="placeholder-text">Adriatic Waterfront<br><small>Honed Limestone Promenade</small></div>
+                                    </div>
+                                </div>
                             </div>
                             <p>A 5,600 m² ribbon of honed Lipica Unito tiles now lines the Adriatic waterfront. The smooth-but-grippy finish stands up to salty spray, bicycle tires, and evening strolls, all while mirroring the grey of distant Karst cliffs.</p>
-                        </div>
-
-                        <div class="project">
-                            <h3>House in the Olive Grove, near Rovinj (2022)</h3>
-                            <div class="image-placeholder project-image" onclick="openFullscreen('Rovinj House', 'Modern minimalist house with flamed Lipica Unito terrace decks merging with hillside, and honed interior slabs keeping rooms cool under Istrian sun.')">
-                                <div class="placeholder-text">Istrian Villa Integration<br><small>Flamed & Honed Finishes</small></div>
-                            </div>
-                            <p>Flamed terrace decks of Lipica Unito merge house and hillside; inside, honed slabs keep rooms cool beneath summer suns. The single stone palette ties modern minimalism to the rocky Istrian soil outside every window.</p>
-                        </div>
-
-                        <div class="project">
-                            <h3>"Dive into Immortality" Sculpture, Grožnjan (2023)</h3>
-                            <div class="image-placeholder project-image" onclick="openFullscreen('Grožnjan Sculpture', 'An 8-tonne Lipica Unito block carved into an abstract swimmer leaping through space, with polished fossil flecks catching daylight to create a water-like ripple effect.')">
-                                <div class="placeholder-text">Stone Festival Sculpture<br><small>Abstract Swimming Form</small></div>
-                            </div>
-                            <p>At the Karst Stone Festival, an artist carved an 8-tonne block into an abstract swimmer leaping through space. The polished fossil flecks catch daylight, making the figure seem to ripple like water—proof that the ancient limestone still lends fresh life to new art.</p>
                         </div>
                     </div>
                 </div>
@@ -674,18 +833,109 @@
         <div class="fullscreen-content" onclick="event.stopPropagation()">
             <button class="close-btn" onclick="closeFullscreen()">×</button>
             <h2 id="fullscreenTitle"></h2>
-            <div class="image-placeholder" style="margin: 30px 0; min-height: 400px;">
-                <div class="placeholder-text" id="fullscreenDescription"></div>
+            <div class="fullscreen-image-container">
+                <button class="gallery-nav gallery-prev" id="galleryPrev" onclick="previousImage()">‹</button>
+                <img id="fullscreenImage" src="" alt="" class="fullscreen-image">
+                <button class="gallery-nav gallery-next" id="galleryNext" onclick="nextImage()">›</button>
+                <div class="gallery-counter" id="galleryCounter"></div>
             </div>
+            <p id="fullscreenDescription" class="fullscreen-description"></p>
         </div>
     </div>
 
     <script>
-        function openFullscreen(title, description) {
+        let currentGallery = [];
+        let currentImageIndex = 0;
+        
+        function openFullscreen(title, description, imageSrc) {
             document.getElementById('fullscreenTitle').textContent = title;
             document.getElementById('fullscreenDescription').textContent = description;
+            
+            // Set up gallery based on the title
+            setupGallery(title);
+            
             document.getElementById('fullscreenOverlay').style.display = 'block';
             document.body.style.overflow = 'hidden';
+        }
+        
+        function setupGallery(title) {
+            // Define image galleries for each tale
+            const galleries = {
+                'Surface Quarry': [
+                    { src: 'media/surface_quarry1.png', alt: 'Surface Quarry' },
+                    { src: 'media/surface_quarry2.png', alt: 'Surface Quarry' },
+                    { src: 'media/surface_quarry3.png', alt: 'Surface Quarry' },
+                    { src: 'media/surface_quarry4.png', alt: 'Surface Quarry' },
+                ],
+                'Lipica II Underground': [
+                    { src: 'media/lipica_II_1.png', alt: 'Lipica II Underground' },
+                    { src: 'media/lipica_II_2.png', alt: 'Lipica II Underground' },
+                    { src: 'media/lipica_II_3.png', alt: 'Lipica II Underground' },
+                    { src: 'media/lipica_II_4.png', alt: 'Lipica II Underground' },
+                ],
+                'Imperial Stud Farm': [
+                    { src: 'media/stud_farm1.png', alt: 'Imperial Stud Farm' },
+                    { src: 'media/stud_farm2.png', alt: 'Imperial Stud Farm' },
+                    { src: 'media/stud_farm3.png', alt: 'Imperial Stud Farm' }
+                ],
+                'Vienna Ringstrasse': [
+                    { src: 'media/votive_church1.png', alt: 'Votiv Church' },
+                    { src: 'media/votive_church2.png', alt: 'Votiv Church' },
+                ],
+                'Ljubljana Nebotičnik': [
+                    { src: 'media/neboticnik1.png', alt: 'Ljubljana Nebotičnik Tower' },    
+                    { src: 'media/neboticnik2.png', alt: 'Ljubljana Nebotičnik Tower' },
+                    { src: 'media/neboticnik3.png', alt: 'Ljubljana Nebotičnik Tower' },
+                ],
+                'Cankarjev dom Forecourt': [
+                    { src: 'media/cankarjev_dom1.png', alt: 'Cankarjev dom Forecourt' },
+                ],
+                'Umag Seafront Promenade': [
+                    { src: 'media/umag_promenade1.png', alt: 'Umag Seafront Promenade' },
+                ],
+            };
+            
+            currentGallery = galleries[title] || [{ src: 'https://via.placeholder.com/800x600?text=' + encodeURIComponent(title), alt: title }];
+            currentImageIndex = 0;
+            
+            updateGalleryDisplay();
+        }
+        
+        function updateGalleryDisplay() {
+            const imageElement = document.getElementById('fullscreenImage');
+            const counterElement = document.getElementById('galleryCounter');
+            const prevButton = document.getElementById('galleryPrev');
+            const nextButton = document.getElementById('galleryNext');
+            
+            // Update image
+            imageElement.src = currentGallery[currentImageIndex].src;
+            imageElement.alt = currentGallery[currentImageIndex].alt;
+            
+            // Update counter
+            if (currentGallery.length > 1) {
+                counterElement.textContent = `${currentImageIndex + 1} / ${currentGallery.length}`;
+                counterElement.style.display = 'block';
+                prevButton.style.display = 'flex';
+                nextButton.style.display = 'flex';
+            } else {
+                counterElement.style.display = 'none';
+                prevButton.style.display = 'none';
+                nextButton.style.display = 'none';
+            }
+        }
+        
+        function previousImage() {
+            if (currentGallery.length > 1) {
+                currentImageIndex = (currentImageIndex - 1 + currentGallery.length) % currentGallery.length;
+                updateGalleryDisplay();
+            }
+        }
+        
+        function nextImage() {
+            if (currentGallery.length > 1) {
+                currentImageIndex = (currentImageIndex + 1) % currentGallery.length;
+                updateGalleryDisplay();
+            }
         }
 
         function closeFullscreen() {
