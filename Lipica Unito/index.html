@@ -78,6 +78,9 @@
             text-align: center;
             position: relative;
             overflow: hidden;
+            min-height: 100vh; /* cinematic full viewport */
+            display: grid;
+            place-items: center;
         }
 
         header::before {
@@ -95,6 +98,55 @@
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-20px); }
         }
+
+        /* Cinematic hero slideshow */
+        .hero-slides {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .hero-slide {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transform: scale(1.05);
+            transition: opacity 1.2s ease, transform 6s ease;
+            filter: brightness(0.78) saturate(1.05) contrast(1.03);
+        }
+        .hero-slide.active { opacity: 1; transform: scale(1); }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(800px 400px at 50% -10%, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.05) 35%, rgba(0,0,0,0.35) 75%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        header .container { position: relative; z-index: 2; }
+
+        /* Scroll cue */
+        .scroll-cue {
+            position: absolute;
+            left: 50%;
+            bottom: 28px;
+            transform: translateX(-50%);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.4);
+            background: rgba(0,0,0,0.25);
+            padding: 10px 16px;
+            border-radius: 999px;
+            font-size: 0.95rem;
+            letter-spacing: .5px;
+            text-decoration: none;
+            z-index: 2;
+            backdrop-filter: blur(6px);
+            transition: background .2s ease, transform .2s ease, border-color .2s ease;
+        }
+        .scroll-cue:hover { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.6); transform: translateX(-50%) translateY(-2px); }
 
         h1 {
             font-size: 2.5rem;
@@ -235,14 +287,14 @@
         .birthplace-images {
             display: grid;
             grid-template-columns: 1fr;
-            gap: var(--spacing-lg);
+            gap: var(--spacing-xs);
             margin: var(--spacing-lg) 0;
         }
         
         @media (min-width: 768px) {
             .birthplace-images {
                 grid-template-columns: 1fr 1fr;
-                gap: 40px;
+                gap: var(--spacing-xs);
                 margin: 50px 0;
             }
         }
@@ -727,6 +779,14 @@
 </head>
 <body>
     <header>
+        <!-- Cinematic slideshow background -->
+        <div class="hero-slides" aria-hidden="true">
+            <div class="hero-slide active" style="background-image: url('media/lipica_II_1.png');"></div>
+            <div class="hero-slide" style="background-image: url('media/surface_quarry1.png');"></div>
+            <div class="hero-slide" style="background-image: url('media/lipica_II_3.png');"></div>
+            <div class="hero-slide" style="background-image: url('media/surface_quarry3.png');"></div>
+        </div>
+        <div class="hero-overlay" aria-hidden="true"></div>
         <div class="language-selector">
             <select id="languageSelect" onchange="setLanguage(this.value)">
                 <option value="en">English</option>
@@ -737,9 +797,10 @@
             <h1 data-translate="mainTitle">Lipica Unito</h1>
             <p class="subtitle" data-translate="mainSubtitle">Timeless Stone from the Karst Plateau</p>
         </div>
+        <a href="#contentStart" class="scroll-cue">Scroll ↓</a>
     </header>
 
-    <main>
+    <main id="contentStart">
         <div class="container">
             <section class="intro">
                 <p data-translate="introText">Over 85 million years during the Cretaceous period, under clear waters from tiny shells and bones from countless sea creatures and sands pressed together to form a special rock called <strong>Lipica Unito</strong>. This smooth gray limestone from the Karst region is known for tiny fossil bits that catch the light, giving it a soft shimmer.</p>
@@ -752,23 +813,20 @@
                 <div class="section-content">
                     <p data-translate="birthplaceDesc1">Lipica Unito—and its flowery-patterned sister, Lipica Fiorito—come from the same rocky home: the Karst plateau near the village of Lipica in southwest Slovenia. For hundreds of years, quarry workers followed its grey stripes in small, open pits.</p>
                     
-                    <div class="birthplace-images">
-                        <div class="tale-image-actual" onclick="openFullscreen('Surface Quarry', 'Historic open-pit quarry where Lipica Unito was first extracted, showing the natural grey stripes of limestone layers against the Karst landscape.')">
-                            <img src="media/surface_quarry1.png" alt="Surface Quarry" class="tale-preview-image">
-                            <div class="image-overlay">
-                                <div class="placeholder-text" data-translate="surfaceQuarryOverlay">Surface Quarry<br><small>Historic Open-Pit Extraction</small></div>
-                            </div>
-                        </div>
-                        <div class="tale-image-actual" onclick="openFullscreen('Lipica II Underground', 'Modern underground Lipica II quarry - a stone cathedral 50 meters below surface where diamond-wire saws cut perfect 20-tonne blocks.')">
-                            <img src="media/lipica_II_1.png" alt="Lipica II Underground" class="tale-preview-image">
-                            <div class="image-overlay">
-                                <div class="placeholder-text" data-translate="lipica2Overlay">Lipica II Underground<br><small>Modern Stone Cathedral</small></div>
-                            </div>
+                    <div class="tale-image-actual" onclick="openFullscreen('Surface Quarry', 'Historic open-pit quarry where Lipica Unito was first extracted, showing the natural grey stripes of limestone layers against the Karst landscape.')">
+                        <img src="media/surface_quarry1.png" alt="Surface Quarry" class="tale-preview-image">
+                        <div class="image-overlay">
+                            <div class="placeholder-text" data-translate="surfaceQuarryOverlay">Surface Quarry<br><small>Historic Open-Pit Extraction</small></div>
                         </div>
                     </div>
-                    
                     <p data-translate="birthplaceDesc2">In 1986 the work moved below ground when Marmor Sežana opened the Lipica II quarry, a hidden "stone cathedral" sitting 50 m under the surface. Diamond-wire saws cut perfect 20-tonne blocks while the land above stays almost untouched.</p>
-                    
+                    <div class="tale-image-actual" onclick="openFullscreen('Lipica II Underground', 'Modern underground Lipica II quarry - a stone cathedral 50 meters below surface where diamond-wire saws cut perfect 20-tonne blocks.')">
+                        <img src="media/lipica_II_1.png" alt="Lipica II Underground" class="tale-preview-image">
+                        <div class="image-overlay">
+                            <div class="placeholder-text" data-translate="lipica2Overlay">Lipica II Underground<br><small>Modern Stone Cathedral</small></div>
+                        </div>
+                    </div>
+                
                     <p data-translate="birthplaceDesc3">Whether taken from the sunny pits or Lipica II's cool echoing halls, every piece of Lipica Unito shows the plateau's silver-grey colour sprinkled with tiny fossils, linking today's buildings to a stoneworking story that stretches across centuries and over 80 years of modern extraction.</p>
                 </div>
             </section>
@@ -780,7 +838,7 @@
                 <div class="section-content">
                     <div class="tales">
                         <div class="tale">
-                            <h3 data-translate="tale1Title">1. The Imperial Stud Farm (1580)</h3>
+                            <h3 data-translate="tale1Title">The Imperial Stud Farm (1580)</h3>
                             <div class="tale-content">
                                 <p data-translate="tale1Desc">When Archduke Charles II chose the windy Karst plateau for his new Lipica Stud Farm, he built the stables and manor from the grey limestone lying beneath the horses' hooves. Local masons shaped Lipica Unito into cool, thick walls that stayed refreshingly chill in summer and snug in the bora gales of winter. Grooms swear that running a hand across the fossil-flecked doorframes still brings good luck before a dressage show—proof that stone and stallion share the same calm spirit.</p>
                             </div>
@@ -795,7 +853,7 @@
                         </div>
 
                         <div class="tale">
-                            <h3 data-translate="tale2Title">2. Rails to Ringstrasse (1857-1918)</h3>
+                            <h3 data-translate="tale2Title">Rails to Ringstrasse (1857-1918)</h3>
                             <div class="tale-content">
                                 <p data-translate="tale2Desc">The 1857 Trieste–Vienna railway turned Karst quarries into express suppliers for the booming Habsburg capital. Wagon-loads of Lipica Unito rattled north each night, destined for the grand Ringstrasse. There, architects tucked the silver-grey blocks into façades and window tracery of the new Votive Church and surrounding townhouses. Decades later, geologist Alois Kieslinger traced the stone's fossil patterns and confirmed its origin. Modern restorers still order fresh Unito from the same quarry because the century-old carvings have out-weathered neighboring sandstones—testament to a limestone that travels well and ages even better.</p>
                             </div>
@@ -810,7 +868,7 @@
                         </div>
 
                         <div class="tale">
-                            <h3 data-translate="tale3Title">3. A Skyscraper Takes Flight (1933)</h3>
+                            <h3 data-translate="tale3Title">A Skyscraper Takes Flight (1933)</h3>
                             <div class="tale-content">
                                 <p data-translate="tale3Desc">Ljubljana's Nebotičnik rose 70 m, daringly modern for its time. Yet its architects grounded the tower in tradition, lining every lift lobby and the shimmer of the entrance floor with polished Lipica Unito. Residents joked the elevators shot "from Karst to the clouds," because the same stone that paved their village squares now whisked them skyward. Ninety years on, the grey panels still gleam—proving the rock can swap shepherd paths for Art-Deco glamour without losing a grain of its soul.</p>
                             </div>
@@ -1094,6 +1152,22 @@
         window.addEventListener('resize', setMobileHeight);
         window.addEventListener('orientationchange', setMobileHeight);
         setMobileHeight();
+    </script>
+    <script>
+        // Lightweight crossfade slideshow for the hero
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = Array.from(document.querySelectorAll('.hero-slide'));
+            if (!slides.length) return;
+            let i = 0;
+            const advance = () => {
+                const prev = slides[i];
+                i = (i + 1) % slides.length;
+                const next = slides[i];
+                prev.classList.remove('active');
+                next.classList.add('active');
+            };
+            setInterval(advance, 4200);
+        });
     </script>
 </body>
 </html>
